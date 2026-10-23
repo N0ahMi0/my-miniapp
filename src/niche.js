@@ -1,9 +1,9 @@
 /**
  * 小众指数计算。
  *
- * 口径：游戏拥有者数量（SteamSpy 估算）。
+ * 口径：游戏拥有者数量（SteamSpy 区间 + 评论数标定）。
  * - 单款游戏：用快照的 101 个分位点把拥有者数映射成 0-100 的"比多少比例的游戏更冷门"；
- * - 整库：按游玩时长加权平均，玩得越久越代表真实口味。
+ * - 整库：每款游戏等权平均（不用游玩时长加权，避免网游/单机的类型偏差）。
  *
  * 数值口径与偏差说明见页面脚注。
  */
@@ -46,17 +46,13 @@ export function computeNicheIndex(games) {
     };
   });
 
-  // 按游玩时长加权：玩得越久，越代表你的真实口味。
-  const played = scored.filter((game) => game.playtimeHours > 0);
-  const basis = played.length > 0 ? played : scored;
-  let sumWeight = 0;
-  let sumScore = 0;
-  for (const game of basis) {
-    const weight = 0.6 + Math.log10(1 + Math.max(game.playtimeHours, 0));
-    sumWeight += weight;
-    sumScore += game.rarity * weight;
-  }
-  const index = sumWeight > 0 ? Math.round(sumScore / sumWeight) : 0;
+  // 每款游戏等权。
+  // 曾用时长加权，但时长与游戏类型强相关（网游天然比单机累积得多），
+  // 会把小众单机系统性地压低——那是类型偏差，不是口味信号，故弃用。
+  const index =
+    scored.length > 0
+      ? Math.round(scored.reduce((sum, game) => sum + game.rarity, 0) / scored.length)
+      : 0;
 
   const byRarity = [...scored].sort((a, b) => b.rarity - a.rarity || b.playtimeHours - a.playtimeHours);
   const ownersSorted = scored.map((game) => game.owners).sort((a, b) => a - b);

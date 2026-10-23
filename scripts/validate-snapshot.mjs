@@ -74,6 +74,15 @@ console.log(
   `[validate] 通过：${count} 款，来源 ${source}${fixture ? '（fixture，仅供本地调试）' : ''}，` +
     `生成于 ${generatedAt}（${ageDays.toFixed(1)} 天前）`,
 );
+if (Array.isArray(data)) {
+  const distinct = new Set(data.filter((_, index) => index % 2 === 1)).size;
+  console.log(`[validate] 不同取值：${distinct} 个`);
+  if (!fixture && distinct < 1000) {
+    // SteamSpy 的 owners 只有 13 个原始区间；低于 1000 说明没用评论数标定，
+    // 会出现大量并列值，小众分在底部饱和。
+    console.warn('[validate] ⚠ 取值过于集中，可能没走评论数标定（method=review-scaled）');
+  }
+}
 if (ageDays > 30) {
   console.warn('[validate] ⚠ 快照已超过 30 天，建议重跑 fetch:players');
 }

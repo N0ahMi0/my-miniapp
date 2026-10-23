@@ -8,6 +8,8 @@ import { snapshotMeta } from './player-stats.js';
 const STORAGE_KEY = 'niche_last_result';
 // v3：口径改为"拥有者数量"，旧存档字段不兼容，直接作废重算。
 const STORAGE_VERSION = 3;
+// 打分算法版本：换权重/口径时递增，让旧存档一并作废，避免界面显示过期结论。
+const ALGO_VERSION = 2;
 
 const els = {
   avatar: document.querySelector('[data-testid="user-avatar"]'),
@@ -85,6 +87,8 @@ function toSummary(result) {
     })),
     source: result.source ?? 'mock',
     sourceMessage: result.message ?? '',
+    snapshotAt: snapshotMeta().generatedAt,
+    algoVersion: ALGO_VERSION,
     computedAt: result.computedAt,
     savedAt: new Date().toISOString(),
   };
@@ -192,6 +196,10 @@ async function readSaved() {
   try {
     const { data } = await hbSDK.storage.getStorage({ key: STORAGE_KEY });
     if (!data || data.version !== STORAGE_VERSION || typeof data.index !== 'number') return null;
+    // 快照换了一版，旧结果的前提就变了，直接作废重算。
+    if (data.snapshotAt !== snapshotMeta().generatedAt) return null;
+    // 打分算法变了，旧结论也不该继续展示。
+    if (data.algoVersion !== ALGO_VERSION) return null;
     return data;
   } catch (error) {
     console.warn('读取本地结果失败', error);
