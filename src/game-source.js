@@ -105,8 +105,12 @@ export async function loadLibrary() {
       const data = result.data;
       if (typeof data?.isMe === 'boolean') isMe = isMe && data.isMe;
       for (const item of data.gameList ?? []) {
+        // 快照按 Steam App ID 建索引；小黑盒目录 ID（appid）与它不保证相同。
+        // 文档约定 steamAppid 缺失时回退为 appid，这里沿用同一规则。
+        const steamAppid = Number.isInteger(item.steamAppid) ? item.steamAppid : item.appid;
         games.push({
-          appid: item.appid,
+          appid: steamAppid,
+          catalogAppid: item.appid,
           name: item.name,
           image: item.image ?? item.icon ?? '',
           playtimeHours: toHours(item.playtimeForever),
