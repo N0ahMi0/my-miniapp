@@ -1,0 +1,393 @@
+:root {
+  --page-background: #f7f8f9;
+  --card-background: #ffffff;
+  --card-border: #e6e9ec;
+  --text-primary: #14191e;
+  --text-secondary: #64696e;
+  --text-muted: #91959a;
+  --brand: #ff5f00;
+  --brand-soft: #fff2e8;
+  --button-background: #14191e;
+  --button-foreground: #ffffff;
+  --button-hover: #393d40;
+  --button-pressed: #000000;
+  --button-disabled: #c8cdd2;
+  --focus-ring: #009015;
+  --error: #c92228;
+  --warn: #b26b00;
+  --success: #067a34;
+  --track: #eef1f4;
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: var(--text-primary);
+  background: var(--page-background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-width: 0;
+  min-height: 100%;
+  background: var(--page-background);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(100%, 440px);
+  margin: 0 auto;
+  padding: max(28px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right))
+    max(28px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+}
+
+/* --------------------------------- 头部 --------------------------------- */
+
+.hero {
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.tagline {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --------------------------------- 卡片 --------------------------------- */
+
+.card {
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: var(--card-background);
+  padding: 16px;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+  background: var(--track);
+}
+
+.identity-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.identity-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.identity-hint {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* --------------------------------- 分数 --------------------------------- */
+
+.score-card {
+  text-align: center;
+  background: linear-gradient(180deg, var(--brand-soft), var(--card-background) 72%);
+}
+
+.score-label {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.score-value {
+  margin: 6px 0 0;
+  color: var(--brand);
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-unit {
+  margin-left: 2px;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.score-rank {
+  margin: 10px 0 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.score-desc {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* --------------------------------- 统计 --------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.stat {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-background);
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+/* --------------------------------- 列表 --------------------------------- */
+
+.list-card h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.game-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-row {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.game-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.game-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.game-name {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-players {
+  flex: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--brand);
+}
+
+/* --------------------------------- 按钮 --------------------------------- */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.primary {
+  color: var(--button-foreground);
+  background: var(--button-background);
+}
+
+.ghost {
+  color: var(--text-primary);
+  background: var(--track);
+}
+
+.ghost:not(:disabled):active,
+.primary:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  color: var(--text-muted);
+  background: var(--button-disabled);
+  cursor: not-allowed;
+}
+
+.primary:disabled {
+  color: var(--button-foreground);
+}
+
+/* --------------------------------- 状态 --------------------------------- */
+
+.status {
+  min-height: 20px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.status[data-tone='success'] {
+  color: var(--success);
+}
+
+.status[data-tone='warn'] {
+  color: var(--warn);
+}
+
+.status[data-tone='error'] {
+  color: var(--error);
+}
+
+.footnotes {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.footnotes p {
+  margin: 0;
+}
+
+.disclaimer {
+  margin-top: 6px;
+}
+
+@media (hover: hover) {
+  .primary:not(:disabled):hover {
+    background: var(--button-hover);
+  }
+
+  .ghost:not(:disabled):hover {
+    background: var(--card-border);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-background: #0f1317;
+    --card-background: #191e24;
+    --card-border: #262c33;
+    --text-primary: #f7f8f9;
+    --text-secondary: #b6bbc0;
+    --text-muted: #82878c;
+    --brand: #ff7a2f;
+    --brand-soft: #241a13;
+    --button-background: #f7f8f9;
+    --button-foreground: #14191e;
+    --button-hover: #ffffff;
+    --button-pressed: #c4c8cc;
+    --button-disabled: #3a4149;
+    --focus-ring: #32b846;
+    --error: #fa3c4b;
+    --warn: #f0a53a;
+    --success: #4bd37b;
+    --track: #262c33;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+}

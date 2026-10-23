@@ -1,0 +1,62 @@
+name: player-stats
+
+# 每周一 03:17 UTC 抓一次 Steam 拥有者数快照（SteamSpy 估算）。
+# 也可以手动触发：Actions → player-stats → Run workflow。
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      pages:
+        description: 'SteamSpy 最大页数（每页 1000 款）'
+        required: false
+        default: '70'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: player-stats
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Fetch snapshot
+        run: >
+          node scripts/fetch-players.mjs
+          --out src/data
+          --pages ${{ github.event.inputs.pages || '70' }}
+
+      - name: Validate snapshot
+        run: node scripts/validate-snapshot.mjs src/data/players.json
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/players.json
+          if git diff --cached --quiet; then
+            echo "快照无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "chore(data): 更新拥有者数快照"
+          git push
+
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: players-snapshot
+          path: src/data/players*.json
+          retention-days: 14

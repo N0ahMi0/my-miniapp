@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>谁最小众</title>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">小黑盒工坊小程序</p>
+        <h1>谁最小众</h1>
+        <p class="tagline">用你的 Steam 游戏库，算算你的口味有多偏</p>
+      </header>
+
+      <section class="card identity" aria-label="用户身份">
+        <img class="avatar" data-testid="user-avatar" alt="" hidden />
+        <div class="identity-text">
+          <p class="identity-name" data-testid="user-name">未登录</p>
+          <p class="identity-hint" data-testid="user-hint">登录后可读取你的 Steam 游戏库</p>
+        </div>
+        <button type="button" class="ghost" data-testid="login-button">登录</button>
+      </section>
+
+      <section class="card score-card" aria-label="小众指数">
+        <p class="score-label">小众指数</p>
+        <p class="score-value">
+          <span data-testid="score-value">--</span><span class="score-unit">/100</span>
+        </p>
+        <p class="score-rank" data-testid="score-rank">还没有计算</p>
+        <p class="score-desc" data-testid="score-desc">点击下方按钮，读取游戏库开始计算</p>
+      </section>
+
+      <section class="stats" aria-label="统计概览">
+        <div class="stat">
+          <p class="stat-value" data-testid="stat-games">--</p>
+          <p class="stat-label">游戏数</p>
+        </div>
+        <div class="stat">
+          <p class="stat-value" data-testid="stat-hours">--</p>
+          <p class="stat-label">总时长（小时）</p>
+        </div>
+        <div class="stat">
+          <p class="stat-value" data-testid="stat-median">--</p>
+          <p class="stat-label">中位拥有者</p>
+        </div>
+      </section>
+
+      <section class="card list-card" aria-label="最冷门的游戏">
+        <h2>你库里最冷门的几款</h2>
+        <ul class="game-list" data-testid="game-list">
+          <li class="empty-row">计算后显示</li>
+        </ul>
+      </section>
+
+      <section class="actions" aria-label="操作">
+        <button type="button" class="primary" data-testid="compute-button">计算我的小众指数</button>
+        <div class="action-row">
+          <button type="button" class="ghost" data-testid="share-button" disabled>分享结果</button>
+          <button type="button" class="ghost" data-testid="save-button" disabled>保存到本地</button>
+        </div>
+      </section>
+
+      <p class="status" data-testid="status" role="status" aria-live="polite"></p>
+
+      <footer class="footnotes">
+        <p data-testid="source-note">数据来源：待计算</p>
+        <p data-testid="saved-note" hidden></p>
+        <p class="disclaimer">
+          拥有者数为 SteamSpy 估算区间的几何中点，快照时间见上方；未收录的游戏按冷门估算并标注。
+        </p>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

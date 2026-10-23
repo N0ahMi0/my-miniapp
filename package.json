@@ -1,0 +1,51 @@
+{
+  "name": "my-miniapp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "heybox": {
+    "miniProgramId": "01a1627b-4a94-72f7-aa43-e93d1fc166a7",
+    "name": "谁最小众",
+    "desc": "读取你的 Steam 游戏库，按各游戏的玩家规模算出属于你的小众指数，并列出库里最冷门的几款游戏。",
+    "category": "tool",
+    "icon": "assets/heybox-placeholder.png",
+    "coverImages": [
+      "assets/heybox-placeholder.png"
+    ],
+    "platforms": [
+      "android",
+      "ios",
+      "ohos",
+      "windows",
+      "macos"
+    ],
+    "permissions": {
+      "userInfo": {
+        "enabled": true
+      },
+      "steamLibrary": {
+        "enabled": true
+      },
+      "share": {
+        "enabled": true
+      },
+      "storage": {
+        "enabled": true
+      }
+    }
+  },
+  "scripts": {
+    "hb-sdk": "hb-sdk",
+    "dev": "hb-sdk dev",
+    "build": "hb-sdk build",
+    "deploy": "hb-sdk remote deploy",
+    "fetch:players": "node scripts/fetch-players.mjs",
+    "validate:players": "node scripts/validate-snapshot.mjs"
+  },
+  "dependencies": {
+    "@heybox/hb-sdk": "^0.9.2"
+  },
+  "devDependencies": {
+    "vite": "^8.0.12"
+  }
+}
